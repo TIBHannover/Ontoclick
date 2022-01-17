@@ -247,22 +247,22 @@ export default {
       request: null,
       link: link,
       conceptrecogniserValue: conceptrecogniserValue ,
-      conceptrecogniserOptions: [{
+      conceptrecogniserOptions: [/*{
         id: 'ncbos',
         label: 'NCBO Bioportal Search',
       }, {
         id: 'ncboa',
         label: 'NCBO Bioportal Annotator',
-      },/*{
+      },{
         id: 'pryzm',
         label: 'Pryzm Health CR'
       },*/ {
         id: 'ebi',
-        label: 'Ontology Lookup Search EBI'
-      }, {
+        label: 'TIB Terminology Service Search'
+      }/* , {
         id: 'jax',
         label: 'HPO Jax',
-      },/* {
+      },{
         id: 'neural',
         label: 'Neural Concept Recogniser',
       }*/]

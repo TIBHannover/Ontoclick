@@ -30,7 +30,7 @@ const recogDict = {
   'NCBO Bioportal Annotator': 1,
   // 'Pryzm Health CR': 2,
   'HPO Jax': 3,
-  'Ontology Lookup Search EBI': 4,
+  'TIB Terminology Service Search': 4,
   // 'Neural Concept Recogniser': 5,
 };
 // Search HTML for concept recogniser dropdown list
@@ -134,7 +134,7 @@ export default {
       process.env.EBI,
       {
         q: data.q,
-        ontology: 'hp',
+        ontology: '*',
         groupField: 'iri',
         start: data.page,
         rows: 5,
