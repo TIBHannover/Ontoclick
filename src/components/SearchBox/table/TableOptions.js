@@ -26,24 +26,17 @@ import axios from 'axios';
 
 
 const recogDict = {
-  'NCBO Bioportal Search': 0,
-  'NCBO Bioportal Annotator': 1,
+  // 'NCBO Bioportal Search': 0,
+  // 'NCBO Bioportal Annotator': 1,
   // 'Pryzm Health CR': 2,
-  'HPO Jax': 3,
+  // 'HPO Jax': 3,
   'TIB Terminology Service Search': 4,
   // 'Neural Concept Recogniser': 5,
 };
 // Search HTML for concept recogniser dropdown list
 // Initial startup value will always be NCBO Search
 function getSelectedAPI() {
-  let div = document.getElementsByName("conceptRecogniser")[0];
-  let api;
-  // let api = 'Ontology Lookup Search EBI';
-  if (typeof div !== "undefined") {
-    api = document.getElementsByClassName('vue-treeselect__single-value')[0].innerText;
-  } else {
-    api = 'NCBO Bioportal Search';
-  }
+  let api = 'TIB Terminology Service Search';
   return recogDict[api];
 }
 
@@ -100,9 +93,9 @@ export default {
   },
   requestFunction: (data) => {
     let api = getSelectedAPI();
-    let ontologies = getOntologies();
+    let ontologies = 'EDAM';
 
-    const ncbo = [
+/*     const ncbo = [
       process.env.NCBO_SEARCH,
       process.env.NCBO_ANNOTATOR,
       {
@@ -121,14 +114,14 @@ export default {
         include: 'prefLabel,synonym,definition,notation',
         ontologies: ontologies
       }
-    ];
+    ]; */
 
-    const jax = [
+/*     const jax = [
       process.env.JAX,
       {
         q: data.q
       }
-    ];
+    ]; */
 
     const ebi = [
       process.env.EBI,
@@ -157,18 +150,6 @@ export default {
     // Change the URL and parameters depending on the Concept Recogniser selected
     let apiURL, apiParam;
     switch(api) {
-      case 0:
-        apiURL = ncbo[0];
-        apiParam = ncbo[2];
-        break;
-      case 1:
-        apiURL = ncbo[1];
-        apiParam = ncbo[3];
-        break;
-      case 3:
-        apiURL = jax[0];
-        apiParam = jax[1];
-        break;
       case 4:
         apiURL = ebi[0];
         apiParam = ebi[1];
@@ -205,41 +186,41 @@ export default {
     //   })
     // }
 
-    const ncbos_get = axios.get(ncbo[0], {params: ncbo[2]});
-    const ncboa_get = axios.get(ncbo[1], {params: ncbo[3]});
-    const jax_get = axios.get(jax[0], {params: jax[1]});
+/*     const ncbos_get = axios.get(ncbo[0], {params: ncbo[2]});
+    const ncboa_get = axios.get(ncbo[1], {params: ncbo[3]}); */
+ //   const jax_get = axios.get(jax[0], {params: jax[1]});
     const ebi_get = axios.get(ebi[0], {params: ebi[1]});
 
-    return axios.all([ncbos_get, ncboa_get, jax_get, ebi_get]
+    return axios.all([ebi_get]
     ).then(res => {
-      const ncbos_res = res[0];
-      const ncboa_res = res[1];
-      const jax_res = res[2];
-      const ebi_res = res[3];
+/*       const ncbos_res = res[0];
+      const ncboa_res = res[1]; */
+ //     const jax_res = res[0];
+      const ebi_res = res[0];
 
       // Parse NCBO Search response
       // none needed
 
       // Parse NCBO Annotator response
-      for (var i = 0; i < ncboa_res.data.length; i++) {
+/*       for (var i = 0; i < ncboa_res.data.length; i++) {
         // Switch return object's keys to align with display rows in SearchBox.vue
         ncboa_res.data[i].notation = ncboa_res.data[i].annotatedClass.notation;
         ncboa_res.data[i].prefLabel = ncboa_res.data[i].annotatedClass.prefLabel;
         ncboa_res.data[i].definition = ncboa_res.data[i].annotatedClass.definition;
         ncboa_res.data[i].synonym = ncboa_res.data[i].annotatedClass.synonym;
         ncboa_res.data[i].annotatedClass = null;
-      }
+      } */
 
       // Parse JAX response
-      jax_res.data.terms = keyLoop(jax_res.data.terms, 'id', 'notation');
-      jax_res.data.terms = keyLoop(jax_res.data.terms, 'name', 'prefLabel');
+/*       jax_res.data.terms = keyLoop(jax_res.data.terms, 'id', 'notation');
+      jax_res.data.terms = keyLoop(jax_res.data.terms, 'name', 'prefLabel'); */
 
       // Parse EBI response
       ebi_res.data.response.docs = keyLoop(ebi_res.data.response.docs, 'obo_id', 'notation');
       ebi_res.data.response.docs = keyLoop(ebi_res.data.response.docs, 'label', 'prefLabel');
       ebi_res.data.response.docs = keyLoop(ebi_res.data.response.docs, 'description', 'definition');
 
-      return [ncbos_res, ncboa_res, jax_res, ebi_res];
+      return [ebi_res];
     }).catch((err) => {
       console.log(err);
       return null;
@@ -291,48 +272,8 @@ export default {
   responseAdapter: (response) => {
     let api = getSelectedAPI();
     if (response !== null) {
-      if (api == 0) {
+ if (api == 4) {
         response = response[0];
-        return {
-          data: response.data.collection,
-          count: response.data.totalCount
-        }
-      } else if (api == 1) {
-        response = response[1];
-        return {
-          data: response.data,
-          count: response.data.length
-        }
-      // } else if (api == 2) {
-      //   return {
-      //     data: response.data.data,
-      //     count: response.data.data.length
-      //   }
-      } else if (api == 3) {
-        response = response[2];
-        let count;
-        let data;
-        if (response.data.terms == undefined) {
-          data = [];
-          count = 0;
-        } else if (response.data.terms.length >= 10) {
-          data = response.data.terms;
-          count = 1;
-        } else if (response.data.terms.length == 0)  {
-          data = [];
-          count = 0;
-        } else {
-          data = response.data.terms;
-          count = response.data.terms.length;
-        }
-        return {
-          data: data,
-          // API only returns top 10 results, all results are returned on one single page
-          // Let count be 1 to let user think there are no more result pages
-          count: count
-        }
-      } else if (api == 4) {
-        response = response[3];
         if (response.data.response == undefined) {
           return {
             data: [],

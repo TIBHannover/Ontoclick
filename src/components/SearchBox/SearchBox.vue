@@ -372,11 +372,11 @@ export default {
       localStorage.ontologyValue = this.ontologyValue
     },
     alerter() {
-      if(!localStorage.apiKeyOntoclick){
+/*       if(!localStorage.apiKeyOntoclick){
         let apkey = prompt('API key not found. This might cause problems when using plugin. Your key can be set by creating account at: https://bioportal.bioontology.org/account. You can choose to cancel this popup and press the reset key button to come back and update later.')
         apkey ? localStorage.apiKeyOntoclick = apkey : localStorage.apiKeyOntoclick = 'fae307aa-db9d-43be-8f9d-1c04444ad4d4'
       }
-      document.getElementById('apkey').innerHTML =  localStorage.apiKeyOntoclick
+      document.getElementById('apkey').innerHTML =  localStorage.apiKeyOntoclick */
     },
     keyResetter() {
       let conf = prompt("Please enter 'reset' without quotes to reset API key")
