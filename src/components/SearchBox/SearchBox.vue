@@ -198,7 +198,7 @@ function isArrayInArray(arr, item){
   return contains;
 }
 
-let conceptrecogniserValue = 'ncbos'
+let conceptrecogniserValue = 'TIB Terminology Service Search'
 if(localStorage.conceptrecogniserValue){
   conceptrecogniserValue = localStorage.conceptrecogniserValue
 }
