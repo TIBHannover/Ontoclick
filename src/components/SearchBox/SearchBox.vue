@@ -2,7 +2,7 @@
 <div >
   <div class="row">
     <div class="col-sm-7 text-left">
-      <img class="logo" src="/static/img/rdf_flyer.png">
+      <img class="logo" src="/static/img/tib.png">
       <h3 class="pull-left">ONTOCLICK</h3>
       <i class="pull-right hover-action fas fa-eraser clear-icon hoverer" title="Clear All" id="clearButton"></i>
       <button class="pull-right hover-action export-button" title="Export" id="exportButton">
@@ -39,6 +39,9 @@
         <a class="hover-action far fa-save save-button" title="Save to history" @click="storeData(props.row.notation, props.row.prefLabel)" v-if="props.row.notation && props.row.prefLabel && link"></a>
       </template>
   </v-server-table>
+  <br>
+  <br>
+<p>This tool is forked from the original <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a> tool and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </p>
 </div>
 </template>
 

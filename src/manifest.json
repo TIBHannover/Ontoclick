@@ -8,8 +8,8 @@
   "manifest_version": 2,
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://use.fontawesome.com/releases/v5.14.0/js/all.js; object-src 'self'",
   "icons": {
-    "16": "static/img/rdf_flyer.png",
-    "128": "static/img/rdf_flyer.png"
+    "16": "static/img/tib.png",
+    "128": "static/img/tib.png"
   },
   "browser_action": {
     "default_title": "Ontoclick",
