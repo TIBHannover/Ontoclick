@@ -1,5 +1,5 @@
 {
-  "name": "OntoClickTIB",
+  "name": "TermClick",
   "description": "Turn a free text description into a proper ontology term from TIB terminology service.",
   "version": "1.0.0",
   "background": {
@@ -12,7 +12,7 @@
     "128": "static/img/tib.png"
   },
   "browser_action": {
-    "default_title": "Ontoclick",
+    "default_title": "Termclick",
     "default_popup": "index.html"
   },
   "web_accessible_resources": [

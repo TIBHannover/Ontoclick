@@ -1,5 +1,5 @@
 {
-  "name": "OntoClickTIB",
+  "name": "TermClick",
   "version": "1.0.0",
   "description": "Turn a free text description into a proper ontology term from TIB terminology service.",
   "author": "giraygi <giraytuncay@gmail.com>; grimbonious <grimbonious@hey.computer>",

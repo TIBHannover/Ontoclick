@@ -3,8 +3,8 @@
 // Add listener to create ontoclick context menu items when the extension is installed
 chrome.runtime.onInstalled.addListener(function() {
   chrome.contextMenus.create({
-    id: 'ontoclick-en',
-    title: 'OntoClick',
+    id: 'termclick-en',
+    title: 'TermClick',
     type: 'normal',
     contexts: ['all']
   });
@@ -13,8 +13,8 @@ chrome.runtime.onInstalled.addListener(function() {
 // Add listener to create ontoclick context menu items on Chrome broswer startup
 chrome.runtime.onStartup.addListener(function() {
   chrome.contextMenus.create({
-    id: 'ontoclick-en',
-    title: 'OntoClick',
+    id: 'termclick-en',
+    title: 'TermClick',
     type: 'normal',
     contexts: ['all']
   });

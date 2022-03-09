@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 const state = {
   count: 0,
-  appTitle: 'ontoclick',
+  appTitle: 'termclick',
   appVersion: '0.0.1',
 }
 

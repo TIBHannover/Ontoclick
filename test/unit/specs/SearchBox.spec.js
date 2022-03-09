@@ -7,6 +7,6 @@ describe('SearchBox.vue', () => {
       el: document.createElement('div'),
       render: (h) => h(SearchBox),
     });
-    expect(vm.$el.querySelector('h3').textContent).to.equal('ONTOCLICK');
+    expect(vm.$el.querySelector('h3').textContent).to.equal('TERMCLICK');
   });
 });

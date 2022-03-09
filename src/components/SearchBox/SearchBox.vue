@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-sm-7 text-left">
       <img class="logo" src="/static/img/tib.png">
-      <h3 class="pull-left">ONTOCLICK</h3>
+      <h3 class="pull-left">TERMCLICK</h3>
       <i class="pull-right hover-action fas fa-eraser clear-icon hoverer" title="Clear All" id="clearButton"></i>
       <button class="pull-right hover-action export-button" title="Export" id="exportButton">
         <i class="pull-right fas fa-file-download export-icon hoverer"></i>

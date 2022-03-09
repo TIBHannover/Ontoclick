@@ -12,7 +12,7 @@ module.exports = {
       .url(devServer)
       .waitForElementVisible('#app', 5000)
       .assert.elementPresent('.logo')
-      .assert.containsText('h3', 'ONTOCLICK')
+      .assert.containsText('h3', 'TERMCLICK')
       .end();
   },
 };
