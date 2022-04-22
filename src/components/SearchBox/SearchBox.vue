@@ -22,6 +22,7 @@
       </div> -->
     <template slot="child_row" scope="props">
         <div class='text-wrap' v-if="props.row.definition"><b>Definition: </b>{{props.row.definition[0]}}</div>
+        <div class='text-wrap' v-if="props.row.type"><b>Type: </b>{{props.row.type}}</div>
         <div class='text-wrap' v-if="props.row.synonym"><b>Synonyms: </b>{{ typeof props.row.synonym === 'string' ? props.row.synonym : props.row.synonym.join(', ') }}</div>
       </template>
     <template slot="notation" scope="props" v-if="props.row.notation">
@@ -29,8 +30,12 @@
         <a class="hover-action far fa-copy" @click='copyContent("notation"+props.index)'></a>
       </template>
     <template slot="prefLabel" scope="props" v-if="props.row.prefLabel">
-        <span :id='"prefLabel"+props.index' v-if="props.row.prefLabel">{{props.row.prefLabel}}</span>
+        <a :id='"prefLabel"+props.index' v-if="props.row.prefLabel" v-bind:href="props.row.iri" target="_blank">{{props.row.prefLabel}}</a>
         <a class="hover-action far fa-copy" @click='copyContent("prefLabel"+props.index)'></a>
+      </template>
+    <template slot="ontology" scope="props" v-if="props.row.ontology_name">
+        <a :id='"ontology"+props.index' v-if="props.row.ontology_name" v-bind:href="'https://service.tib.eu/ts4tib/ontologies/' + props.row.ontology_name" target="_blank">{{props.row.ontology_name}}</a>
+        <a class="hover-action far fa-copy" @click='copyContent("ontology"+props.index)'></a>
       </template>
     <template slot="spantext" scope="props">
         <span :id='"spantext"+props.index' v-if="props.row.prefLabel && props.row.notation"></span>
@@ -227,7 +232,7 @@ export default {
     return {
       loading: true,
       url: 'https://google.com', // Not required
-      columns: ['notation', 'prefLabel' , 'spantext'],
+      columns: ['notation', 'prefLabel' , 'ontology', 'spantext'],
       options: {
         initFilters: {
           'GENERIC': query

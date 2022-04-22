@@ -86,6 +86,7 @@ export default {
   headings: {
     notation: 'Identifier',
     prefLabel: 'Label',
+    ontology: 'Ontology ID',
     spantext: 'Actions'
   },
   pagination: {
