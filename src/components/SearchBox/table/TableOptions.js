@@ -112,8 +112,12 @@ export default {
   },
   requestFunction: (data) => {
     let api = getSelectedAPI();
-    let ontologies = 'EDAM';
+    let ontologies = getOntologies();
     let selections = concatOntologies();
+
+    if (typeof document.getElementById('ontology').value === 'string' && document.getElementById('ontology').value.length > 0)
+      selections = document.getElementById('ontology').value;    
+    
 
 /*     const ncbo = [
       process.env.NCBO_SEARCH,

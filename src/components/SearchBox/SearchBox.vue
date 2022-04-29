@@ -266,7 +266,7 @@ let conceptrecogniserValue = 'TIB Terminology Service Search'
 if(localStorage.conceptrecogniserValue){
   conceptrecogniserValue = localStorage.conceptrecogniserValue
 }
-let ontologyValue = ['HP']
+let ontologyValue = ['hp']
 if(localStorage.ontologyValue){
   ontologyValue = localStorage.ontologyValue.split(",")
 }
@@ -288,7 +288,7 @@ export default {
     return {
       listSchemas: [],
       listClassifications: [],
-      listOntologies: [{ id: 1, label: "kamil" }],
+      listOntologies: [{ id: '*', label: '*' }],
       selectedSchema: "",
       selectedClassification: "",
       selectedOntology: "",
