@@ -56,6 +56,24 @@ function getOntologies() {
   return ((Array.isArray(list) && list.length) ? list.join(',') : 'HP');
 }
 
+function concatOntologies(){
+  var options = [];
+  if(document.getElementById('ontology') != null)
+    options = document.getElementById('ontology').options;
+    var selections = [];
+
+    for (var i = 0; i < options.length; i++) {
+      if(options[i]._value !='' && options[i]._value !=null)
+      selections.push(options[i]._value);
+  }
+
+    var selectconcat = selections.join(',');
+
+    if (typeof selectconcat === 'string' && selectconcat.length > 0)
+       return selectconcat;
+       else return '*';
+}
+
 // Renames the key for dictionary
 // Input: dictionary, keyToReplace, newKeyName
 const clone = (obj) => Object.assign({}, obj);
@@ -95,6 +113,7 @@ export default {
   requestFunction: (data) => {
     let api = getSelectedAPI();
     let ontologies = 'EDAM';
+    let selections = concatOntologies();
 
 /*     const ncbo = [
       process.env.NCBO_SEARCH,
@@ -128,7 +147,9 @@ export default {
       process.env.EBI,
       {
         q: data.q,
-        ontology: '*',
+ //       schema: document.getElementById('schema').value,
+ //       classification: document.getElementById('classification').value,
+        ontology: selections,
         groupField: 'iri',
         start: data.page,
         rows: 5,
