@@ -155,7 +155,7 @@ export default {
  //       classification: document.getElementById('classification').value,
         ontology: selections,
         groupField: 'iri',
-        start: data.page,
+        start: data.page*5,
         rows: 5,
         local: true
       }
