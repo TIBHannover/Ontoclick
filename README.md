@@ -1,4 +1,4 @@
-# Ontoclick
+# Termclick
 
 ![build](https://github.com/azankl/Ontoclick/workflows/build/badge.svg)
 
@@ -6,17 +6,13 @@
 
 ### Overview
 
-Ontoclick is a web browser extension for Chrome and Firefox browsers that lets the user highlight a piece of text and then tries to find a matching Ontology term for it.
+Termclick is a web browser extension for Chrome and Firefox browsers that lets the user highlight a piece of text and then tries to find a matching Ontology term for it.
 
-Ontoclick currently supports matching terms to the [Human Phenotype Ontology](https://hpo.jax.org/app/), [Gene Ontology](http://geneontology.org), [Mondo Disease Ontology](https://mondo.monarchinitiative.org), [Orphanet Rare Disease Ontology](http://www.orphadata.org/cgi-bin/index.php#ontologies) and [Human Disease Ontology](https://disease-ontology.org).
-
-Ontoclick uses the [NCBO BioPortal Search API](http://data.bioontology.org/documentation#nav_search) to find a matching ontology term, but searches can also be performed with the [NCBO BioPortal Annotator API](http://data.bioontology.org/documentation#nav_annotator), the [EBI Ontology Lookup Service Search API](https://www.ebi.ac.uk/ols/docs/api) or the [HPO Search API](https://hpo.jax.org/webjars/swagger-ui/3.20.9/index.html?url=/api/hpo/docs/) (the latter two only support searching the Human Phenotype Ontology).
-
-The search results can be copied to the clipboard or saved to a list that can be exported in .CSV format.
+Termclick currently supports matching terms in all the ontologies of TIB (Leibniz Information Centre for Science and Technology and University Library) Terminology Service.Besides, it is planned to add more Terminology Services to the interface in the long run. The search results can be copied to the clipboard or saved to a list that can be exported in .CSV format.
 
 ### Screeenshot
 
-<img src="https://github.com/azankl/Ontoclick/blob/master/Screenshots/Figure1.png" width="1024px">
+<img src="./Screenshots/Figure2.png" width="1024px">
 
 ### Publication
 
@@ -25,35 +21,36 @@ The search results can be copied to the clipboard or saved to a list that can be
 
 ### Acknowledgements
 
-Ontoclick was born at [Health Hack Sydney](https://speakerdeck.com/azankl/ontoclick-pitch-healthhack-2017) in November 2017. Many thanks to Team Ontoclick, in particular Graham Towse from [LivingryLabs](https://www.livingrylabs.net/) for developing the first prototype. Many thanks to Anthony Xu, Yifei (Frank) Luo, Aravind Venkateswaran, and Lianguizi (Alisa) Zhou, for further improving this prototype.
+Termclick is developed based on the open source tool Ontoclick that was born at [Health Hack Sydney](https://speakerdeck.com/azankl/ontoclick-pitch-healthhack-2017) in November 2017. Many thanks to Team Ontoclick, in particular Graham Towse from [LivingryLabs](https://www.livingrylabs.net/) for developing the first prototype. Many thanks to Anthony Xu, Yifei (Frank) Luo, Aravind Venkateswaran, and Lianguizi (Alisa) Zhou, for further improving the OntoClick prototype.
 
 ### Install for Chrome
 
-Ontoclick is available on the Chrome Store [here](https://chrome.google.com/webstore/detail/ontoclick/nepbilmonlfaigoeldkbimkeihligbgf).
+Termclick is available on the Chrome Store [here](https://chrome.google.com/webstore/detail/termclick/).
 
 ### Install for Firefox
 
-Ontoclick is available as a Firefox Add-On [here](https://addons.mozilla.org/en-US/firefox/addon/ontoclick/)
+Termclick is available as a Firefox Add-On [here](https://addons.mozilla.org/en-US/firefox/addon/termclick/)
 
 ### How to Use the Extension
 
 1. Visit a web page in your browser
-2. Highlight the text you want to search for, right-click to show the browser context menu and select Ontoclick from the context menu.
-3. The Ontoclick popup opens and displays matching ontology terms from the Human Phenotype Ontology.
+2. Highlight the text you want to search for, right-click to show the browser context menu and select Termclick from the context menu.
+3. The Termclick popup opens and displays matching ontology terms from all the TIB Terminology Service ontologies.
 4. Click on the '+' icon in front of a term to see more information about the term (if available).
-5. Hover over a term to see additional icons:
+5. Click on the Label of a term to navigate to its IRI. Click on the Ontology ID to navigate to the Ontology in TIB Terminology Service.
+6. Hover over a term to see additional icons:
    - click the 'copy' icon next to the Ontology ID to copy the Ontology ID
    - click the 'copy' icon next to the Label to copy the Ontology Label
    - click the 'copy' icon in the 'Actions' column to copy the Ontology ID _and_ the Label
    - click the 'highlighter' icon in the 'Actions' column to copy the highlighted text _and_ the Ontology ID _and_ the Label.
-   - click the 'disc' icon in the 'Actions' column to save the highlighted text, Ontology ID and Label to Ontoclick's history list. The number in the right upper corner of the Ontoclick window shows the number of items saved to the history list. Click the 'download' icon to download the history list as a .CSV file. Click the 'rubber' icon to erase the history list.
-6. If no suitable terms are retrieved, click on the triangle next to 'NCBO Bioportal Search' to re-run the search with a different concept recogniser. The result window will update immediately with the new results. The different concept recognisers all have their strengths and weaknesses, try different ones to see what gives the best results.
-7. Click on the triangle next to 'Human Phenotype Ontology' to select another (or additional) ontologies. This only works when 'NCBO Bioportal Search' or 'NCBO Bioportal Annotator' are selected.
-8. The Ontoclick Popup can also be launched without selecting any text:
-   - right-click anywhere in the browser window and select Ontoclick from the context menu that appears
-   - click the Ontoclick icon in the browser toolbar
-   - in both cases, you can now type your search term into the Ontoclick Search bar
-   - Please note: the history list function is not available when launching the Ontoclick popup from the toolbar icon
+   - click the 'disc' icon in the 'Actions' column to save the highlighted text, Ontology ID and Label to Termclick's history list. The number in the right upper corner of the Ontoclick window shows the number of items saved to the history list. Click the 'download' icon to download the history list as a .CSV file. 
+   Click the 'rubber' icon to erase the history list.
+7. Click on the Schema to list available schemas and click on a particular schema and see its respective classifications in the second dropdown list. Once you pick a particular classification, you will be able to perform a filtered search with respect to your choice. You can further narrow your search with respect to a particular ontology in the 3rd dropdown list.
+8. The Termclick Popup can also be launched without selecting any text:
+   - right-click anywhere in the browser window and select Termclick from the context menu that appears
+   - click the Termclick icon in the browser toolbar
+   - in both cases, you can now type your search term into the Termclick Search bar
+   - Please note: the history list function is not available when launching the Termclick popup from the toolbar icon
 
 ### Install From Source
 
@@ -82,17 +79,6 @@ Go to Chrome:
 ``` bash
 # install dependencies
 yarn install
-
-# get your BioPortal REST API key from https://bioportal.bioontology.org/account
-open https://bioportal.bioontology.org/account
-
-# add your API key for development builds
-cp api/example.api.json api/dev.api.json
-open api/dev.api.json
-
-# add your API key for production builds
-cp api/example.api.json api/prod.api.json
-open api/prod.api.json
 
 # serve with hot reload at localhost:8080
 yarn run dev
