@@ -14,7 +14,7 @@
   <div id="apkey" style="display:none"></div>
   </div>
   <v-server-table :url="url" :columns="columns" :options="options">
-    <div slot='conceptRec' class='form-group'>
+    <div slot='conceptRec' class='form-group' style="display: none;">
       <treeselect :multiple="false" :clearable="false" :select='selectAPI()' :close-on-select="true" :options="conceptrecogniserOptions" v-model="conceptrecogniserValue" placeholder="Select Concept Recognizer" name="conceptRecogniser" />
     </div>
 <!--     <div slot='ontologiesFilter' class='form-group' v-if="conceptrecogniserValue==='ncbos' || conceptrecogniserValue==='ncboa'">
@@ -65,13 +65,9 @@
       </select>
     </div>
 
-    <p v-if="selectedSchema">Selected Schema : {{ this.selectedSchema }}</p>
-    <p v-if="selectedClassification">
-      Selected Classification : {{ this.selectedClassification }}
-    </p>
-    <p v-if="selectedOntology">
-      Selected Ontology : {{ this.selectedOntology }}
-    </p>
+    <!-- <p v-if="selectedSchema">Selected Schema : {{ this.selectedSchema }}</p>
+    <p v-if="selectedClassification">Selected Classification : {{ this.selectedClassification }}</p>
+    <p v-if="selectedOntology">Selected Ontology : {{ this.selectedOntology }}</p> -->
   </div>
       </div>
 
@@ -378,6 +374,7 @@ export default {
               }
             );
             this.listClassifications = classificationList;
+            this.listOntologies = [];
           } catch (error) {
             this.listClassifications = [];
             this.listOntologies = [];
