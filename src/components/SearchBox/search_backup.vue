@@ -14,63 +14,12 @@
   <div id="apkey" style="display:none"></div>
   </div>
   <v-server-table :url="url" :columns="columns" :options="options">
-    <div slot='conceptRec' class='form-group' style="display: none;">
+    <div slot='conceptRec' class='form-group'>
       <treeselect :multiple="false" :clearable="false" :select='selectAPI()' :close-on-select="true" :options="conceptrecogniserOptions" v-model="conceptrecogniserValue" placeholder="Select Concept Recognizer" name="conceptRecogniser" />
     </div>
-<!--     <div slot='ontologiesFilter' class='form-group' v-if="conceptrecogniserValue==='ncbos' || conceptrecogniserValue==='ncboa'">
+  <div slot='ontologiesFilter' class='form-group'>
         <treeselect :multiple="true" :clearable="false" ::select='ontoSave()' close-on-select="true" :flat="true" :options="ontologyOptions" style="z-index:6;" placeholder="Filter by Ontology" v-model="ontologyValue" />
-      </div> -->
-
-<div slot='ontologiesFilter' class='form-group'>
-        <div class="cascading-dropdown">
-    <div class="dropdown">
-      <span>Schema:</span>
-      <select id="schema" v-model="selectedSchema" @change="onChangeSchema">
-        <option value="">Select a Schema</option>
-        <option
-          v-for="(schema, index) in listSchemas"
-          :value="schema.id"
-          :key="index"
-        >
-          {{ schema.id }}
-        </option>
-      </select>
-    </div>
-
-    <div class="dropdown">
-      <span>Classification:</span>
-      <select id="classification" v-model="selectedClassification" @change="onChangeClassification">
-        <option value="">Select a Classification</option>
-        <option
-          v-for="(classification, index) in listClassifications"
-          :value="classification.id"
-          :key="index"
-        >
-          {{ classification.id }}
-        </option>
-      </select>
-    </div>
-
-    <div class="dropdown">
-      <span>Ontology:</span>
-      <select id="ontology" v-model="selectedOntology">
-        <option value="">Select an Ontology</option>
-        <option
-          v-for="(ontology, index) in listOntologies"
-          :value="ontology.id"
-          :key="index"
-        >
-          {{ ontology.label }}
-        </option>
-      </select>
-    </div>
-
-    <!-- <p v-if="selectedSchema">Selected Schema : {{ this.selectedSchema }}</p>
-    <p v-if="selectedClassification">Selected Classification : {{ this.selectedClassification }}</p>
-    <p v-if="selectedOntology">Selected Ontology : {{ this.selectedOntology }}</p> -->
-  </div>
       </div>
-
     <template slot="child_row" scope="props">
         <div class='text-wrap' v-if="props.row.definition"><b>Definition: </b>{{props.row.definition[0]}}</div>
         <div class='text-wrap' v-if="props.row.type"><b>Type: </b>{{props.row.type}}</div>
@@ -108,7 +57,7 @@ import Treeselect from '@riophae/vue-treeselect'
   // ontologyByAcronym
 // } from './OntologyData/tree'
 import ontologies from './OntologyData/ontologies'
-import axios from "axios";
+import axios from 'axios'
 
 function copyElementContent(srcElementId) {
   let srcElement = document.getElementById(srcElementId)
@@ -183,6 +132,21 @@ function changeExportName() {
     document.getElementById('exportCounter').innerText = len;
   }
 }
+
+async function getOntologyOptions(){
+  let httpEntity = await axios.get('https://service.tib.eu/ts4tib/api/ontologies');
+  let ontologyConfigs = httpEntity.data._embedded.ontologies;
+  let ontologyList = [];
+for (var i = 0; i < ontologyConfigs.length; i++){
+  var ontology = {};
+  ontology["id"] = ontologyConfigs[i].ontologyId;
+  ontology["label"] = ontologyConfigs[i].config.title;
+  ontologyList.push(ontology)
+}
+ return ontologyList;
+}
+
+
 
 function getStorage() {
   // PERSISTANT STORAGE
@@ -265,6 +229,7 @@ if(localStorage.conceptrecogniserValue){
 let ontologyValue = ['hp']
 if(localStorage.ontologyValue){
   ontologyValue = localStorage.ontologyValue.split(",")
+  console.log(ontologyValue)
 }
 export default {
   name: 'search-box',
@@ -276,18 +241,13 @@ export default {
     // let ontology = document.location.search.match(/ontology=(.*)/)
     query = query ? unescape(query[1]) : undefined
     // ontology = ontology ? unescape(ontology[1]) : undefined
+    let ontologies2 = null;
     let pid = getPubMedID();
     let link = true;
     if (pid === null) {
       link = false;
     }
     return {
-      listSchemas: [],
-      listClassifications: [],
-      listOntologies: [{ id: '*', label: '*' }],
-      selectedSchema: "",
-      selectedClassification: "",
-      selectedOntology: "",
       loading: true,
       url: 'https://google.com', // Not required
       columns: ['notation', 'prefLabel' , 'ontology', 'spantext'],
@@ -308,7 +268,7 @@ export default {
       },
       query: query,
       ontologyValue: ontologyValue,
-      ontologyOptions: ontologies,
+      ontologyOptions: ontologies2,
       results: [],
       request: null,
       link: link,
@@ -334,76 +294,7 @@ export default {
       }*/]
     }
   },
-   created() {
-    this.loadSchemas();
-  },
   methods: {
-       loadSchemas() {
-      axios
-        .get(
-          "https://service.tib.eu/ts4tib/api/ontologies/schemakeys?page=0&size=1000000"
-        )
-        .then((res) => {
-          try {
-            const schemaList = res.data._embedded.strings.map((schema) => {
-              return {
-                id: schema.content,
-              };
-            });
-            this.listSchemas = schemaList;
-          } catch (error) {
-            this.listSchemas = [];
-            this.listClassifications = [];
-            this.listOntologies = [];
-          }
-        });
-    },
-    onChangeSchema() {
-      axios
-        .get(
-          "https://service.tib.eu/ts4tib/api/ontologies/schemavalues?schema=" +
-            this.selectedSchema
-        )
-        .then((res) => {
-          try {
-            const classificationList = res.data._embedded.strings.map(
-              (classification) => {
-                return {
-                  id: classification.content,
-                };
-              }
-            );
-            this.listClassifications = classificationList;
-            this.listOntologies = [];
-          } catch (error) {
-            this.listClassifications = [];
-            this.listOntologies = [];
-          }
-        });
-    },
-    onChangeClassification() {
-      axios
-        .get(
-          "https://service.tib.eu/ts4tib/api/ontologies/filterby?schema=" +
-            this.selectedSchema +
-            "&classification=" +
-            this.selectedClassification +
-            "&page=0&size=1000000"
-        )
-        .then((res) => {
-          try {
-            const ontologyList = res.data._embedded.ontologies.map((ont) => {
-              return {
-                id: ont.ontologyId,
-                label: ont.config.title || "",
-              };
-            });
-            this.listOntologies = ontologyList;
-          } catch (error) {
-            this.listOntologies = [];
-          }
-        });
-    },
     copyContent(srcElementId) {
       copyElementContent(srcElementId);
       window.parent.postMessage({
@@ -519,10 +410,24 @@ export default {
         localStorage.apiKeyOntoclick = ''
         alert('Reset of API key done, please reload plugin to input new API key')
       }
-    }
+    },
+   getOntologyOptions2() {
+    let httpEntity =  axios.get(
+      "https://service.tib.eu/ts4tib/api/ontologies"
+    ).then(res=> {
+
+    let ontologyConfigs = res.data._embedded.ontologies.map((ont) => {
+      return {
+        id: ont.ontologyId,
+        label: ont.config.title || ""
+      };
+    });
+    this.ontologies2=ontologyConfigs
+    })
+  }
   },
    mounted(){
-    this.alerter()
+    this.getOntologyOptions2()
  },
 }
 </script>
