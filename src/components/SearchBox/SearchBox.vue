@@ -375,9 +375,13 @@ export default {
             );
             this.listClassifications = classificationList;
             this.listOntologies = [];
+            this.selectedClassification = "";
+            this.selectedOntology = "";
           } catch (error) {
             this.listClassifications = [];
             this.listOntologies = [];
+            this.selectedClassification = "";
+            this.selectedOntology = "";
           }
         });
     },
@@ -399,8 +403,10 @@ export default {
               };
             });
             this.listOntologies = ontologyList;
+            this.selectedOntology = "";
           } catch (error) {
             this.listOntologies = [];
+            this.selectedOntology = "";
           }
         });
     },
