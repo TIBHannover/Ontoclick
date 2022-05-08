@@ -24,8 +24,8 @@
 <div slot='ontologiesFilter' class='form-group'>
         <div class="cascading-dropdown">
     <div class="dropdown">
-      <span>Schema:</span>
-      <select id="schema" v-model="selectedSchema" @change="onChangeSchema">
+      <span>Schema&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
+      <select id="schema" v-model="selectedSchema" @change="onChangeSchema" style="width: 300px; text-overflow: ellipsis;">
         <option value="">Select a Schema</option>
         <option
           v-for="(schema, index) in listSchemas"
@@ -39,7 +39,7 @@
 
     <div class="dropdown">
       <span>Classification:</span>
-      <select id="classification" v-model="selectedClassification" @change="onChangeClassification">
+      <select id="classification" v-model="selectedClassification" @change="onChangeClassification" style="width: 300px; text-overflow: ellipsis;">
         <option value="">Select a Classification</option>
         <option
           v-for="(classification, index) in listClassifications"
@@ -52,8 +52,8 @@
     </div>
 
     <div class="dropdown">
-      <span>Ontology:</span>
-      <select id="ontology" v-model="selectedOntology">
+      <span>Ontology&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
+      <select id="ontology" v-model="selectedOntology" style="width: 300px; text-overflow: ellipsis;">
         <option value="">Select an Ontology</option>
         <option
           v-for="(ontology, index) in listOntologies"
@@ -95,9 +95,7 @@
         <a class="hover-action far fa-save save-button" title="Save to history" @click="storeData(props.row.notation, props.row.prefLabel)" v-if="props.row.notation && props.row.prefLabel && link"></a>
       </template>
   </v-server-table>
-  <br>
-  <br>
-<p>This tool is forked from the original <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a> tool and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </p>
+<p><center>This tool is forked from the original <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a> tool and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </center></p>
 </div>
 </template>
 

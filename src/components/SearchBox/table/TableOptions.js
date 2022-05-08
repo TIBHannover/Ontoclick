@@ -151,8 +151,6 @@ export default {
       process.env.EBI,
       {
         q: data.q,
- //       schema: document.getElementById('schema').value,
- //       classification: document.getElementById('classification').value,
         ontology: selections,
         groupField: 'iri',
         start: data.page*5,
