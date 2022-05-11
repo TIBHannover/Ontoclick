@@ -1,7 +1,7 @@
 {
   "name": "TermClick",
   "description": "Click on a term to search for its definition, label and synonyms as well as its identifier and type across the approved ontologies of TIB Terminology Service at https://service.tib.eu/ts4tib/index .",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "background": {
     "scripts": ["static/js/background.js"]
   },
