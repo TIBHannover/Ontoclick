@@ -153,7 +153,7 @@ export default {
         q: data.q,
         ontology: selections,
         groupField: 'iri',
-        start: data.page*5,
+        start: (data.page-1)*5,
         rows: 5,
         local: true
       }
