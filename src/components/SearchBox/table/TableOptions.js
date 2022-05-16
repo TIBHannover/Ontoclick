@@ -53,7 +53,7 @@ function getQueryFields() {
       list.push(id);
     }
   }
-  return ((Array.isArray(list) && list.length) ? list.join(',') : 'label');
+  return ((Array.isArray(list) && list.length) ? list.join(',') : 'label,synonym,description,short_form,obo_id,annotations,logical_description,iri');
 }
 
 function concatOntologies(){
