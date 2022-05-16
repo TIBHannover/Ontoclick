@@ -7,34 +7,34 @@
 export default [
   {
     id: 'label',
-    label: 'label'
+    label: 'Label'
   },
   {
     id: 'synonym',
-    label: 'synonym'
+    label: 'Synonym'
   },
   {
     id: 'description',
-    label: 'description'
+    label: 'Description'
   },
   {
     id: 'short_form',
-    label: 'short_form'
+    label: 'Short Form'
   },
   {
     id: 'obo_id',
-    label: 'obo_id'
+    label: 'OBO ID'
   },
   {
     id: 'annotations',
-    label: 'annotations'
+    label: 'Annotations'
   },
   {
     id: 'logical_description',
-    label: 'logical_description'
+    label: 'Logical Description'
   },
   {
     id: 'iri',
-    label: 'iri'
+    label: 'IRI'
   },
-]
+];

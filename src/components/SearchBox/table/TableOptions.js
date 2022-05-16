@@ -48,7 +48,7 @@ function getQueryFields() {
   for (var i = 0; i < div.length; i++) {
     let selected = div[i].innerText;
     // Extract ontology ID to be used for GET request
-    let id = selected;
+    let id = selected.toLowerCase().replace(/ /g, '_');
     if (!list.includes(id)) {
       list.push(id);
     }
