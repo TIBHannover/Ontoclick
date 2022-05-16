@@ -18,7 +18,7 @@
       <treeselect :multiple="false" :clearable="false" :select='selectAPI()' :close-on-select="true" :options="conceptrecogniserOptions" v-model="conceptrecogniserValue" placeholder="Select Concept Recognizer" name="conceptRecogniser" />
     </div>
      <div slot='ontologiesFilter' class='form-group'>
-        <treeselect :multiple="true" :clearable="false" ::select='ontoSave()' close-on-select="true" :flat="true" :options="queryFieldOptions" style="z-index:6;" placeholder="Filter by Ontology" v-model="queryFieldValue" />
+        <treeselect :multiple="true" :clearable="false" ::select='queryFieldSave()' close-on-select="true" :flat="true" :options="queryFieldOptions" style="z-index:6;" placeholder="Filter by Ontology" v-model="queryFieldValue" />
      </div> 
 
 <div slot='ontologiesFilter' class='form-group'>
@@ -507,7 +507,7 @@ export default {
         // do nothing
       }
     },
-    ontoSave() {
+    queryFieldSave() {
       localStorage.queryFieldValue = this.queryFieldValue
     },
     alerter() {
