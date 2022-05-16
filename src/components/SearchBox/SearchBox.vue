@@ -17,9 +17,9 @@
     <div slot='conceptRec' class='form-group' style="display: none;">
       <treeselect :multiple="false" :clearable="false" :select='selectAPI()' :close-on-select="true" :options="conceptrecogniserOptions" v-model="conceptrecogniserValue" placeholder="Select Concept Recognizer" name="conceptRecogniser" />
     </div>
-<!--     <div slot='ontologiesFilter' class='form-group' v-if="conceptrecogniserValue==='ncbos' || conceptrecogniserValue==='ncboa'">
-        <treeselect :multiple="true" :clearable="false" ::select='ontoSave()' close-on-select="true" :flat="true" :options="ontologyOptions" style="z-index:6;" placeholder="Filter by Ontology" v-model="ontologyValue" />
-      </div> -->
+     <div slot='ontologiesFilter' class='form-group'>
+        <treeselect :multiple="true" :clearable="false" ::select='ontoSave()' close-on-select="true" :flat="true" :options="queryFieldOptions" style="z-index:6;" placeholder="Filter by Ontology" v-model="queryFieldValue" />
+     </div> 
 
 <div slot='ontologiesFilter' class='form-group'>
         <div class="cascading-dropdown">
@@ -105,7 +105,7 @@ import Treeselect from '@riophae/vue-treeselect'
   // options,
   // ontologyByAcronym
 // } from './OntologyData/tree'
-import ontologies from './OntologyData/ontologies'
+import queryFields from './OntologyData/queryFields'
 import axios from "axios";
 
 function copyElementContent(srcElementId) {
@@ -260,9 +260,9 @@ let conceptrecogniserValue = 'TIB Terminology Service Search'
 if(localStorage.conceptrecogniserValue){
   conceptrecogniserValue = localStorage.conceptrecogniserValue
 }
-let ontologyValue = ['hp']
-if(localStorage.ontologyValue){
-  ontologyValue = localStorage.ontologyValue.split(",")
+let queryFieldValue = ['label']
+if(localStorage.queryFieldValue){
+  queryFieldValue = localStorage.queryFieldValue.split(",")
 }
 export default {
   name: 'search-box',
@@ -305,8 +305,8 @@ export default {
         uniqueKey: 'notation'
       },
       query: query,
-      ontologyValue: ontologyValue,
-      ontologyOptions: ontologies,
+      queryFieldValue: queryFieldValue,
+      queryFieldOptions: queryFields,
       results: [],
       request: null,
       link: link,
@@ -508,7 +508,7 @@ export default {
       }
     },
     ontoSave() {
-      localStorage.ontologyValue = this.ontologyValue
+      localStorage.queryFieldValue = this.queryFieldValue
     },
     alerter() {
 /*       if(!localStorage.apiKeyOntoclick){
