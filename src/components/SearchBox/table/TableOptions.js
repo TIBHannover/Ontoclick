@@ -42,18 +42,18 @@ function getSelectedAPI() {
 
 // Search for ontologies selected from dropdown menu
 // Human Phenotype Ontology is the default value if no ontologies are selected
-function getOntologies() {
+function getQueryFields() {
   let list = [];
   let div = document.getElementsByClassName('vue-treeselect__multi-value-label');
   for (var i = 0; i < div.length; i++) {
     let selected = div[i].innerText;
     // Extract ontology ID to be used for GET request
-    let id = selected.match(/\(([^)]+)\)/)[1];
+    let id = selected.toLowerCase().replace(/ /g, '_');
     if (!list.includes(id)) {
       list.push(id);
     }
   }
-  return ((Array.isArray(list) && list.length) ? list.join(',') : 'HP');
+  return ((Array.isArray(list) && list.length) ? list.join(',') : 'label,synonym,description,short_form,obo_id,annotations,logical_description,iri');
 }
 
 function concatOntologies(){
@@ -111,8 +111,8 @@ export default {
     dropdown: false
   },
   requestFunction: (data) => {
-    let api = getSelectedAPI();
-    let ontologies = getOntologies();
+    const api = getSelectedAPI();
+    const queryFieldsValue = getQueryFields();
     let selections = concatOntologies();
 
     if (typeof document.getElementById('ontology').value === 'string' && document.getElementById('ontology').value.length > 0)
@@ -151,9 +151,10 @@ export default {
       process.env.EBI,
       {
         q: data.q,
+        queryFields: queryFieldsValue,
         ontology: selections,
         groupField: 'iri',
-        start: (data.page-1)*5,
+        start: (data.page - 1) * 5,
         rows: 5,
         local: true
       }

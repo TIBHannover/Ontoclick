@@ -17,9 +17,9 @@
     <div slot='conceptRec' class='form-group' style="display: none;">
       <treeselect :multiple="false" :clearable="false" :select='selectAPI()' :close-on-select="true" :options="conceptrecogniserOptions" v-model="conceptrecogniserValue" placeholder="Select Concept Recognizer" name="conceptRecogniser" />
     </div>
-<!--     <div slot='ontologiesFilter' class='form-group' v-if="conceptrecogniserValue==='ncbos' || conceptrecogniserValue==='ncboa'">
-        <treeselect :multiple="true" :clearable="false" ::select='ontoSave()' close-on-select="true" :flat="true" :options="ontologyOptions" style="z-index:6;" placeholder="Filter by Ontology" v-model="ontologyValue" />
-      </div> -->
+     <div slot='ontologiesFilter' class='form-group'>
+        <treeselect :multiple="true" :clearable="false" ::select='queryFieldSave()' close-on-select="true" :flat="true" :options="queryFieldOptions" style="z-index:6;" placeholder="Filter by Query Field" v-model="queryFieldValue" />
+     </div> 
 
 <div slot='ontologiesFilter' class='form-group'>
         <div class="cascading-dropdown">
@@ -95,7 +95,7 @@
         <a class="hover-action far fa-save save-button" title="Save to history" @click="storeData(props.row.notation, props.row.prefLabel)" v-if="props.row.notation && props.row.prefLabel && link"></a>
       </template>
   </v-server-table>
-<p><center>This tool is forked from the original <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a> tool and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </center></p>
+<p style="padding: 30px 0px 0px 0px;"><center>This tool is forked from the original <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a> tool and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </center></p>
 </div>
 </template>
 
@@ -105,7 +105,7 @@ import Treeselect from '@riophae/vue-treeselect'
   // options,
   // ontologyByAcronym
 // } from './OntologyData/tree'
-import ontologies from './OntologyData/ontologies'
+import queryFields from './OntologyData/queryFields'
 import axios from "axios";
 
 function copyElementContent(srcElementId) {
@@ -260,9 +260,9 @@ let conceptrecogniserValue = 'TIB Terminology Service Search'
 if(localStorage.conceptrecogniserValue){
   conceptrecogniserValue = localStorage.conceptrecogniserValue
 }
-let ontologyValue = ['hp']
-if(localStorage.ontologyValue){
-  ontologyValue = localStorage.ontologyValue.split(",")
+let queryFieldValue = ['label']
+if(localStorage.queryFieldValue){
+  queryFieldValue = localStorage.queryFieldValue.split(",")
 }
 export default {
   name: 'search-box',
@@ -305,8 +305,8 @@ export default {
         uniqueKey: 'notation'
       },
       query: query,
-      ontologyValue: ontologyValue,
-      ontologyOptions: ontologies,
+      queryFieldValue: queryFieldValue,
+      queryFieldOptions: queryFields,
       results: [],
       request: null,
       link: link,
@@ -497,8 +497,8 @@ export default {
             all[i].style.display = 'none';
           }
           let app = document.getElementById('app');
-          app.style.width = '700px';
-          app.style.height = '500px';
+          app.style.width = '770px';
+          app.style.height = '600px';
         }
 
         let search = document.getElementsByClassName('VueTables__search')[0].children[0].value;
@@ -507,8 +507,8 @@ export default {
         // do nothing
       }
     },
-    ontoSave() {
-      localStorage.ontologyValue = this.ontologyValue
+    queryFieldSave() {
+      localStorage.queryFieldValue = this.queryFieldValue
     },
     alerter() {
 /*       if(!localStorage.apiKeyOntoclick){
