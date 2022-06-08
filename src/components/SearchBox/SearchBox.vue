@@ -75,6 +75,8 @@
         <div class='text-wrap' v-if="props.row.definition"><b>Definition: </b>{{props.row.definition[0]}}</div>
         <div class='text-wrap' v-if="props.row.type"><b>Type: </b>{{props.row.type}}</div>
         <div class='text-wrap' v-if="props.row.synonym"><b>Synonyms: </b>{{ typeof props.row.synonym === 'string' ? props.row.synonym : props.row.synonym.join(', ') }}</div>
+        <button @click="getTermAnnotations(props.row.ontology_name,props.row.type,props.row.iri)">More Information</button>
+        <p v-bind:id="props.row.iri"></p>
       </template>
     <template slot="notation" scope="props" v-if="props.row.notation">
         <span :id='"notation"+props.index' v-if="props.row.notation">{{props.row.notation}}</span>
@@ -280,6 +282,7 @@ export default {
       link = false;
     }
     return {
+      commenttext: "Retry",
       listSchemas: [],
       listClassifications: [],
       listOntologies: [{ id: '*', label: '*' }],
@@ -336,6 +339,80 @@ export default {
     this.loadSchemas();
   },
   methods: {
+
+getTermAnnotations(ontology,type,iri){
+  if (type == "property")
+    axios
+      .get(
+        "https://service.tib.eu/ts4tib/api/ontologies/" +
+          ontology +
+          "/properties/" +
+          encodeURIComponent(encodeURIComponent(iri))
+      )
+      .then((res) => {
+        try {
+          const annotations = Object.keys(res.data.annotation).map((comm) => {
+            return {
+              [comm]: res.data.annotation[comm]
+            };
+          });
+          console.log(annotations);
+          this.commenttext = annotations[0].comment;
+        } catch (error) {
+          this.commenttext = error;
+        }
+      });
+
+  if (type == "term" || type == "class")
+    axios
+      .get(
+        "https://service.tib.eu/ts4tib/api/ontologies/" +
+          ontology +
+          "/terms/" +
+          encodeURIComponent(encodeURIComponent(iri))
+      )
+      .then((res) => {
+  try {
+          const annotations = Object.keys(res.data.annotation).map((comm) => {
+            return {
+              [comm]: res.data.annotation[comm]
+            };
+          });
+          console.log(annotations);
+          this.commenttext = annotations[0].comment;
+        } catch (error) {
+          this.commenttext = error;
+        }
+      });
+
+        if (type == "individual")
+    axios
+      .get(
+        "https://service.tib.eu/ts4tib/api/ontologies/" +
+          ontology +
+          "/individuals/" +
+          encodeURIComponent(encodeURIComponent(iri))
+      )
+      .then((res) => {
+        try {
+          const annotations = Object.keys(res.data.annotation).map((comm) => {
+            return {
+              [comm]: res.data.annotation[comm]
+            };
+          });
+          console.log(annotations);
+          this.commenttext = annotations[0].comment;
+        } catch (error) {
+          this.commenttext = error;
+        }
+      });
+
+document.getElementById(iri).innerHTML = this.commenttext;
+this.commenttext = "Retry";
+
+},
+
+
        loadSchemas() {
       axios
         .get(
