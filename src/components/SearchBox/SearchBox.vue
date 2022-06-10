@@ -341,6 +341,7 @@ export default {
   methods: {
 
 getTermAnnotations(ontology,type,iri){
+  
   if (type == "property")
     axios
       .get(
@@ -356,8 +357,18 @@ getTermAnnotations(ontology,type,iri){
               [comm]: res.data.annotation[comm]
             };
           });
-          console.log(annotations);
-          this.commenttext = annotations[0].comment;
+
+          this.commenttext = "";
+          for (let i = 0; i < annotations.length; i++) {
+            this.commenttext +='<b>'
+            this.commenttext += Object.keys(annotations[i]).join("-");
+            this.commenttext +=': </b>'
+
+            this.commenttext += Object.values(annotations[i]).join("-");
+            this.commenttext +='<br>';
+                  
+           }
+
         } catch (error) {
           this.commenttext = error;
         }
@@ -378,8 +389,16 @@ getTermAnnotations(ontology,type,iri){
               [comm]: res.data.annotation[comm]
             };
           });
-          console.log(annotations);
-          this.commenttext = annotations[0].comment;
+          this.commenttext = "";
+          for (let i = 0; i < annotations.length; i++) {
+            this.commenttext +='<b>'
+            this.commenttext += Object.keys(annotations[i]).join("-");
+            this.commenttext +=': </b>'
+
+            this.commenttext += Object.values(annotations[i]).join("-");
+            this.commenttext +='<br>';
+                  
+           }
         } catch (error) {
           this.commenttext = error;
         }
@@ -400,8 +419,16 @@ getTermAnnotations(ontology,type,iri){
               [comm]: res.data.annotation[comm]
             };
           });
-          console.log(annotations);
-          this.commenttext = annotations[0].comment;
+          this.commenttext = "";
+          for (let i = 0; i < annotations.length; i++) {
+            this.commenttext +='<b>'
+            this.commenttext += Object.keys(annotations[i]).join("-");
+            this.commenttext +=': </b>'
+
+            this.commenttext += Object.values(annotations[i]).join("-");
+            this.commenttext +='<br>';
+                  
+           }
         } catch (error) {
           this.commenttext = error;
         }
