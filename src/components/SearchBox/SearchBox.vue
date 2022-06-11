@@ -351,6 +351,8 @@ getTermAnnotations(ontology,type,iri){
           encodeURIComponent(encodeURIComponent(iri))
       )
       .then((res) => {
+        this.commenttext = "";
+        document.getElementById(iri).innerHTML = ""; 
         try {
           const annotations = Object.keys(res.data.annotation).map((comm) => {
             return {
@@ -358,15 +360,16 @@ getTermAnnotations(ontology,type,iri){
             };
           });
 
-          this.commenttext = "";
+          
           for (let i = 0; i < annotations.length; i++) {
+            
             this.commenttext +='<b>'
             this.commenttext += Object.keys(annotations[i]).join("-");
             this.commenttext +=': </b>'
 
             this.commenttext += Object.values(annotations[i]).join("-");
             this.commenttext +='<br>';
-                  
+            document.getElementById(iri).innerHTML = this.commenttext;    
            }
 
         } catch (error) {
@@ -384,12 +387,13 @@ getTermAnnotations(ontology,type,iri){
       )
       .then((res) => {
   try {
+          this.commenttext = "";
+          document.getElementById(iri).innerHTML = "";
           const annotations = Object.keys(res.data.annotation).map((comm) => {
             return {
               [comm]: res.data.annotation[comm]
             };
           });
-          this.commenttext = "";
           for (let i = 0; i < annotations.length; i++) {
             this.commenttext +='<b>'
             this.commenttext += Object.keys(annotations[i]).join("-");
@@ -397,7 +401,7 @@ getTermAnnotations(ontology,type,iri){
 
             this.commenttext += Object.values(annotations[i]).join("-");
             this.commenttext +='<br>';
-                  
+            document.getElementById(iri).innerHTML = this.commenttext;   
            }
         } catch (error) {
           this.commenttext = error;
@@ -414,12 +418,13 @@ getTermAnnotations(ontology,type,iri){
       )
       .then((res) => {
         try {
+          this.commenttext = "";
+          document.getElementById(iri).innerHTML = "";
           const annotations = Object.keys(res.data.annotation).map((comm) => {
             return {
               [comm]: res.data.annotation[comm]
             };
           });
-          this.commenttext = "";
           for (let i = 0; i < annotations.length; i++) {
             this.commenttext +='<b>'
             this.commenttext += Object.keys(annotations[i]).join("-");
@@ -427,7 +432,7 @@ getTermAnnotations(ontology,type,iri){
 
             this.commenttext += Object.values(annotations[i]).join("-");
             this.commenttext +='<br>';
-                  
+            document.getElementById(iri).innerHTML = this.commenttext;     
            }
         } catch (error) {
           this.commenttext = error;
