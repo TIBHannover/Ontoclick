@@ -13,18 +13,18 @@
     </div>
   <div id="apkey" style="display:none"></div>
   </div>
-  <v-server-table :url="url" :columns="columns" :options="options">
+  <v-server-table :url="url" :columns="columns" :options="options" style="margin: 10px 60px 10px 60px;">
     <div slot='conceptRec' class='form-group' style="display: none;">
       <treeselect :multiple="false" :clearable="false" :select='selectAPI()' :close-on-select="true" :options="conceptrecogniserOptions" v-model="conceptrecogniserValue" placeholder="Select Concept Recognizer" name="conceptRecogniser" />
     </div>
-     <div slot='ontologiesFilter' class='form-group'>
+     <div style="margin: 10px 0 15px 0" slot='ontologiesFilter' class='form-group'>
         <treeselect :multiple="true" :clearable="false" ::select='queryFieldSave()' close-on-select="true" :flat="true" :options="queryFieldOptions" style="z-index:6;" placeholder="Filter by Query Field" v-model="queryFieldValue" />
-     </div> 
+     </div>
 
 <div slot='ontologiesFilter' class='form-group'>
         <div class="cascading-dropdown">
     <div class="dropdown">
-      <span>Schema&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
+      <span style="margin: 10px 0 15px 0">Schema&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
       <select id="schema" v-model="selectedSchema" @change="onChangeSchema" style="width: 300px; text-overflow: ellipsis;">
         <option value="">Select a Schema</option>
         <option
@@ -38,7 +38,7 @@
     </div>
 
     <div class="dropdown">
-      <span>Classification:</span>
+      <span style="margin: 10px 0 15px 0">Classification:</span>
       <select id="classification" v-model="selectedClassification" @change="onChangeClassification" style="width: 300px; text-overflow: ellipsis;">
         <option value="">Select a Classification</option>
         <option
@@ -95,7 +95,7 @@
         <a class="hover-action far fa-save save-button" title="Save to history" @click="storeData(props.row.notation, props.row.prefLabel)" v-if="props.row.notation && props.row.prefLabel && link"></a>
       </template>
   </v-server-table>
-<p style="padding: 30px 0px 0px 0px;"><center>This tool is forked from the original <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a> tool and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </center></p>
+<p style="padding: 30px 0px 15px 0px;"><center>This tool is forked from the original <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a> tool and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </center></p>
 </div>
 </template>
 

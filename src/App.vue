@@ -1,14 +1,14 @@
 <template>
   <div id="app" class="container">
-    <SearchBox></SearchBox>
+    <Header></Header>
   </div>
 </template>
 
 <script>
-import SearchBox from './components/SearchBox/SearchBox';
+import Header from './components/Header';
 
 export default {
-  components: { SearchBox },
+  components: { Header },
 };
 </script>
 
@@ -25,21 +25,5 @@ export default {
   $fa-font-path: '../node_modules/font-awesome/fonts/'
   @import 'node_modules/font-awesome/scss/font-awesome'
 
-  body
-    background-color: #EEEEEE
 
-  #app
-    background: #EEEEEE
-    padding-top: 5px
-
-  .table
-    background-color: #FFFFFF
-    border-radius: 4px
-
-  //some styling adaptations
-  h3
-    color: #2887d4
-    margin-top: 7px
-  p
-    text-align: left
 </style>
