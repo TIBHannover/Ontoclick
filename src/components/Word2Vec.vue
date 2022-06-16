@@ -2,47 +2,47 @@
   <div class="body">
     <h1 style="text-align: center; font-weight: bold">Word2Vec</h1>
     <div class="search-input">
-      <input class="text" type="text" v-model="search" placeholder="Type a word, phrase, or sentence..." />
-      <button @click="getAllWords" style="margin-right: -20px; background: #00B4CC; border: none"><img style="height: 30px; " src="../assets/search-logo.png" id="brand-logo" alt="notFound" /></button>
+      <input class="text" type="text" v-model="word" placeholder="Type a word, phrase, or sentence..." />
     </div>
+    <div class="search-input-count">
+      <input class="text" type="text" v-model="number" placeholder="Type a count number .... " />
+    </div>
+    <button class="submit-input" v-on:click="getAllData()" style="background: #00B4CC; border: none">Search</button>
     <div class="search-result">
-      <p class="box" v-for="item in Words" :key="item.id"> {{ item.title }}</p>
+      <p class="box" v-for="item in count" :key="item.key"> {{ Object.keys(item).toString() }} </p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
+  data() { 
     return {
-      Words: [],
-      search: ''
+      word: '',
+      number:'',
+      count: []
 
     };
   },
 
   methods: {
-    getAllWords() {
-      fetch(`https://jsonplaceholder.typicode.com/todos/`)
-        .then(response => response.json())
+    getAllData(){
+       fetch(`http://localhost:8081/word2vec?word=${this.word}&count=${this.number}`)
+       .then(response => response.json()) 
         .then(res => {
-          console.log(res)
-          if (this.search) {
-            this.Words = res.filter(item =>
-              item.title.toLowerCase().includes(this.search.toLowerCase())
-            );
-          } else {
-            this.Words = res;
-          }
+        if(this.number){
+          this.count=res;
+        } else {
+          this.count=null;
+        }
         }).catch(error => {
-          window.alert("Somthing is wrong")
-      });
+          window.alert("Somthing is .....")
+      }); 
     }
   },
   created() {
-    this.getAllWords();
+    this.getAllData();
   }
-
 };
 </script>
 
@@ -61,6 +61,24 @@ export default {
   margin : 2% 0 0 20%;
   padding-right: 20px;
   height: 65px;
+  font-size: 18px;
+}
+
+.search-input-count{
+  width: 60vw;
+  display: flex;
+  border: 3px solid #00B4CC;
+  margin : 2% 0 0 20%;
+  padding-right: 20px;
+  height: 65px;
+  font-size: 18px;
+}
+
+.submit-input{
+  display: flex;
+  border: 3px solid #00B4CC;
+  margin : 2% 0 0 20%;
+  padding: 10px;
   font-size: 18px;
 }
 
@@ -89,7 +107,7 @@ export default {
   background: #00B4CC  ;
   text-align: center  ;
   margin: 0.2rem  ;
-  padding: 0.1rem 1rem  ;
+  padding: 0.1rem 0.5rem  ;
   display: flex  ;
   align-items: center  ;
   justify-content: center  ;
@@ -97,5 +115,3 @@ export default {
 }
 </style>
 
-
-<input type="text" placeholder="Query" id="VueTables__search_DXx19" class="form-control" value="">
