@@ -75,7 +75,7 @@
         <div class='text-wrap' v-if="props.row.definition"><b>Definition: </b>{{props.row.definition[0]}}</div>
         <div class='text-wrap' v-if="props.row.type"><b>Type: </b>{{props.row.type}}</div>
         <div class='text-wrap' v-if="props.row.synonym"><b>Synonyms: </b>{{ typeof props.row.synonym === 'string' ? props.row.synonym : props.row.synonym.join(', ') }}</div>
-        <button @click="getTermAnnotations(props.row.ontology_name,props.row.type,props.row.iri)">More Information</button>
+        <button v-bind:id="props.row.iri+'button'"  @click="getTermAnnotations(props.row.ontology_name,props.row.type,props.row.iri)">More Information...</button>
         <p v-bind:id="props.row.iri"></p>
       </template>
     <template slot="notation" scope="props" v-if="props.row.notation">
@@ -342,6 +342,12 @@ export default {
 
 getTermAnnotations(ontology,type,iri){
   
+  if (document.getElementById(iri+'button').innerHTML == "Less Information"){
+    document.getElementById(iri+'button').innerHTML = "More Information...";
+    document.getElementById(iri).innerHTML = "";
+    return;
+  }
+  
   if (type == "property")
     axios
       .get(
@@ -369,7 +375,8 @@ getTermAnnotations(ontology,type,iri){
 
             annotationText += Object.values(annotations[i]).join("-");
             annotationText +='<br>';
-            document.getElementById(iri).innerHTML = annotationText;    
+            document.getElementById(iri).innerHTML = annotationText;   
+            document.getElementById(iri+'button').innerHTML = "Less Information"; 
            }
 
         } catch (error) {
@@ -401,7 +408,8 @@ getTermAnnotations(ontology,type,iri){
 
             annotationText += Object.values(annotations[i]).join("-");
             annotationText +='<br>';
-            document.getElementById(iri).innerHTML = annotationText;   
+            document.getElementById(iri).innerHTML = annotationText; 
+            document.getElementById(iri+'button').innerHTML = "Less Information";  
            }
         } catch (error) {
           this.commenttext = error;
@@ -432,7 +440,8 @@ getTermAnnotations(ontology,type,iri){
 
             annotationText += Object.values(annotations[i]).join("-");
             annotationText +='<br>';
-            document.getElementById(iri).innerHTML = annotationText;     
+            document.getElementById(iri).innerHTML = annotationText;  
+            document.getElementById(iri+'button').innerHTML = "Less Information";   
            }
         } catch (error) {
           this.commenttext = error;
@@ -442,8 +451,6 @@ getTermAnnotations(ontology,type,iri){
 this.commenttext = "Retry";
 
 },
-
-
        loadSchemas() {
       axios
         .get(
