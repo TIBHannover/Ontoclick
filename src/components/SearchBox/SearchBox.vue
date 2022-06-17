@@ -341,19 +341,24 @@ export default {
   methods: {
 
 getTermAnnotations(ontology,type,iri){
-  
+
   if (document.getElementById(iri+'button').innerHTML == "Less Information"){
     document.getElementById(iri+'button').innerHTML = "More Information...";
     document.getElementById(iri).innerHTML = "";
     return;
   }
   
+  let termTypeURLComponent = "/terms/";
   if (type == "property")
+    termTypeURLComponent = "/properties/";
+  else if (type == "individual")
+    termTypeURLComponent = "/individuals/";  
+
     axios
       .get(
         "https://service.tib.eu/ts4tib/api/ontologies/" +
           ontology +
-          "/properties/" +
+          termTypeURLComponent +
           encodeURIComponent(encodeURIComponent(iri))
       )
       .then((res) => {
@@ -379,70 +384,6 @@ getTermAnnotations(ontology,type,iri){
             document.getElementById(iri+'button').innerHTML = "Less Information"; 
            }
 
-        } catch (error) {
-          this.commenttext = error;
-        }
-      });
-
-  if (type == "term" || type == "class")
-    axios
-      .get(
-        "https://service.tib.eu/ts4tib/api/ontologies/" +
-          ontology +
-          "/terms/" +
-          encodeURIComponent(encodeURIComponent(iri))
-      )
-      .then((res) => {
-  try {
-          let annotationText = "";
-          document.getElementById(iri).innerHTML = "";
-          const annotations = Object.keys(res.data.annotation).map((comm) => {
-            return {
-              [comm]: res.data.annotation[comm]
-            };
-          });
-          for (let i = 0; i < annotations.length; i++) {
-            annotationText +='<b>'
-            annotationText += Object.keys(annotations[i]).join("-");
-            annotationText +=': </b>'
-
-            annotationText += Object.values(annotations[i]).join("-");
-            annotationText +='<br>';
-            document.getElementById(iri).innerHTML = annotationText; 
-            document.getElementById(iri+'button').innerHTML = "Less Information";  
-           }
-        } catch (error) {
-          this.commenttext = error;
-        }
-      });
-
-        if (type == "individual")
-    axios
-      .get(
-        "https://service.tib.eu/ts4tib/api/ontologies/" +
-          ontology +
-          "/individuals/" +
-          encodeURIComponent(encodeURIComponent(iri))
-      )
-      .then((res) => {
-        try {
-          let annotationText = "";
-          document.getElementById(iri).innerHTML = "";
-          const annotations = Object.keys(res.data.annotation).map((comm) => {
-            return {
-              [comm]: res.data.annotation[comm]
-            };
-          });
-          for (let i = 0; i < annotations.length; i++) {
-            annotationText +='<b>'
-            annotationText += Object.keys(annotations[i]).join("-");
-            annotationText +=': </b>'
-
-            annotationText += Object.values(annotations[i]).join("-");
-            annotationText +='<br>';
-            document.getElementById(iri).innerHTML = annotationText;  
-            document.getElementById(iri+'button').innerHTML = "Less Information";   
-           }
         } catch (error) {
           this.commenttext = error;
         }
