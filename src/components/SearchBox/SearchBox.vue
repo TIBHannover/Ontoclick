@@ -75,7 +75,7 @@
         <div class='text-wrap' v-if="props.row.definition"><b>Definition: </b>{{props.row.definition[0]}}</div>
         <div class='text-wrap' v-if="props.row.type"><b>Type: </b>{{props.row.type}}</div>
         <div class='text-wrap' v-if="props.row.synonym"><b>Synonyms: </b>{{ typeof props.row.synonym === 'string' ? props.row.synonym : props.row.synonym.join(', ') }}</div>
-        <button v-bind:id="props.row.iri+'button'"  @click="getTermAnnotations(props.row.ontology_name,props.row.type,props.row.iri)">More Information...</button>
+        <button v-bind:id="props.row.iri+'button'" @click="getTermAnnotations(props.row.ontology_name,props.row.type,props.row.iri)" style="background-color: #4682B4; color: white; border: none;">More Information ...</button>
         <p v-bind:id="props.row.iri"></p>
       </template>
     <template slot="notation" scope="props" v-if="props.row.notation">
@@ -342,8 +342,10 @@ export default {
 
 getTermAnnotations(ontology,type,iri){
 
-  if (document.getElementById(iri+'button').innerHTML == "Less Information"){
-    document.getElementById(iri+'button').innerHTML = "More Information...";
+  if (document.getElementById(iri+'button').innerHTML == "Less Information | x"){
+    document.getElementById(iri+'button').innerHTML = "More Information ...";
+    document.getElementById(iri+'button').style.backgroundColor = "#4682B4";
+    document.getElementById(iri+'button').style.color = "white";
     document.getElementById(iri).innerHTML = "";
     return;
   }
@@ -380,7 +382,9 @@ getTermAnnotations(ontology,type,iri){
             annotationText += Object.values(annotations[i]).join("-");
             annotationText +='<br>';
             document.getElementById(iri).innerHTML = annotationText;   
-            document.getElementById(iri+'button').innerHTML = "Less Information"; 
+            document.getElementById(iri+'button').innerHTML = "Less Information | x"; 
+            document.getElementById(iri+'button').style.backgroundColor = "#E4F6F8";
+            document.getElementById(iri+'button').style.color = "#008CBA";
            }
 
         } catch (error) {
@@ -431,6 +435,7 @@ this.commenttext = "Retry";
             this.selectedClassification = "";
             this.selectedOntology = "";           
             document.getElementById("classificationdiv").style.display = "block";
+            document.getElementById("ontologydiv").style.display = "none";
               
           } catch (error) {
             this.listClassifications = [];
