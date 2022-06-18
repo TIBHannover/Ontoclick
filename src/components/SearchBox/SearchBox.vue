@@ -37,7 +37,7 @@
       </select>
     </div>
 
-    <div class="dropdown">
+    <div id="classificationdiv" class="dropdown" style="display: none;">
       <span>Classification:</span>
       <select id="classification" v-model="selectedClassification" @change="onChangeClassification" style="width: 300px; text-overflow: ellipsis;">
         <option value="">Select a Classification</option>
@@ -51,7 +51,7 @@
       </select>
     </div>
 
-    <div class="dropdown">
+    <div id="ontologydiv" class="dropdown" style="display: none;">
       <span>Ontology&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
       <select id="ontology" v-model="selectedOntology" style="width: 300px; text-overflow: ellipsis;">
         <option value="">Select an Ontology</option>
@@ -370,8 +370,7 @@ getTermAnnotations(ontology,type,iri){
               [comm]: res.data.annotation[comm]
             };
           });
-
-          
+ 
           for (let i = 0; i < annotations.length; i++) {
             
             annotationText +='<b>'
@@ -430,12 +429,16 @@ this.commenttext = "Retry";
             this.listClassifications = classificationList;
             this.listOntologies = [];
             this.selectedClassification = "";
-            this.selectedOntology = "";
+            this.selectedOntology = "";           
+            document.getElementById("classificationdiv").style.display = "block";
+              
           } catch (error) {
             this.listClassifications = [];
             this.listOntologies = [];
             this.selectedClassification = "";
             this.selectedOntology = "";
+            document.getElementById("classificationdiv").style.display = "none";
+            document.getElementById("ontologydiv").style.display = "none";
           }
         });
     },
@@ -458,9 +461,11 @@ this.commenttext = "Retry";
             });
             this.listOntologies = ontologyList;
             this.selectedOntology = "";
+            document.getElementById("ontologydiv").style.display = "block";
           } catch (error) {
             this.listOntologies = [];
             this.selectedOntology = "";
+            document.getElementById("ontologydiv").style.display = "none";
           }
         });
     },
