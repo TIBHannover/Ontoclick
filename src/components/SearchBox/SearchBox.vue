@@ -73,13 +73,15 @@
 
     <template slot="child_row" scope="props">
         <div class='text-wrap' v-if="props.row.definition"><b>Definition: </b>{{props.row.definition[0]}}</div>
-        <div class='text-wrap' v-if="props.row.type"><b>Type: </b>{{props.row.type}}</div>
         <div class='text-wrap' v-if="props.row.synonym"><b>Synonyms: </b>{{ typeof props.row.synonym === 'string' ? props.row.synonym : props.row.synonym.join(', ') }}</div>
+        <div class='text-wrap' v-if="props.row.short_form && props.row.short_form != props.row.prefLabel && !props.row.iri.includes(props.row.short_form)"><b>Short Form: </b>{{props.row.short_form}}</div>
+        <div class='text-wrap' v-if="props.row.type"><b>Type: </b>{{props.row.type}}</div>
         <button v-bind:id="props.row.iri+'button'" @click="getTermAnnotations(props.row.ontology_name,props.row.type,props.row.iri)" style="background-color: #4682B4; color: white; border: none;">More Information ...</button>
         <p v-bind:id="props.row.iri"></p>
       </template>
-    <template slot="notation" scope="props" v-if="props.row.notation">
+    <template slot="notation" scope="props">
         <span :id='"notation"+props.index' v-if="props.row.notation">{{props.row.notation}}</span>
+        <span :id='"notation"+props.index' v-else-if="props.row.short_form">{{props.row.ontology_name.toUpperCase()+':'+props.row.short_form}}</span>
         <a class="hover-action far fa-copy" @click='copyContent("notation"+props.index)'></a>
       </template>
     <template slot="prefLabel" scope="props" v-if="props.row.prefLabel">
