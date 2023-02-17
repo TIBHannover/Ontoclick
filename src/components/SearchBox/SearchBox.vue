@@ -99,7 +99,7 @@
         <a class="hover-action far fa-save save-button" title="Save to history" @click="storeData(props.row.notation, props.row.prefLabel)" v-if="props.row.notation && props.row.prefLabel && link"></a>
       </template>
   </v-server-table>
-<p style="padding: 30px 0px 0px 0px;"><center>This tool is forked from the original <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a> tool and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </center></p>
+<p style="padding: 30px 0px 0px 0px;"><center>This tool is forked from the original <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a> tool, funded by <a href="https://nfdi4ing.de" target="_blank">NFDI4ING</a> and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </center></p>
 </div>
 </template>
 
