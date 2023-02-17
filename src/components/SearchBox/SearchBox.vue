@@ -2,15 +2,16 @@
 <div >
   <div class="row">
     <div class="col-sm-7 text-left">
-      <img class="logo" src="/static/img/tib-full-en.png">
       <h3 class="pull-left">TERMCLICK</h3>
       <i class="pull-right hover-action fas fa-eraser clear-icon hoverer" title="Clear All" id="clearButton"></i>
       <button class="pull-right hover-action export-button" title="Export" id="exportButton">
         <i class="pull-right fas fa-file-download export-icon hoverer"></i>
         <p class="pull-right" id="exportCounter"></p>
       </button>
+      
       <!-- <button class="pull-right spaced" @click='keyResetter()'>RESET KEY</button> -->
     </div>
+    <img class="logo" src="/static/img/tib-full-en.png">
   <div id="apkey" style="display:none"></div>
   </div>
   <v-server-table :url="url" :columns="columns" :options="options">
@@ -677,6 +678,7 @@ ul.pagination>li>a,
 .logo {
   height: 30px;
   width: 184px;
+  float:right;
 }
 
 .clear-icon {
