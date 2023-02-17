@@ -14,10 +14,9 @@ Termclick currently supports matching terms in all the ontologies of TIB (Leibni
 
 <img src="./Screenshots/Figure2.png" width="1024px">
 
-### Publication
+### Base Service
 
-*Ontoclick: a web browser extension to facilitate biomedical knowledge curation*\
-[BioRxiv](https://www.biorxiv.org/content/10.1101/2021.03.04.433993v2) or [Bioinformatics (Oxford University Press)](https://doi.org/10.1093/bioinformatics/btab520)
+Termclick relies on the API of [TIB Terminology Service](https://service.tib.eu/ts4tib/index) and [its upcoming New Frontend)](https://terminology.tib.eu/ts)
 
 ### Acknowledgements
 
@@ -43,9 +42,9 @@ Termclick is available as a Firefox Add-On [here](https://addons.mozilla.org/en-
    - click the 'copy' icon next to the Label to copy the Ontology Label
    - click the 'copy' icon in the 'Actions' column to copy the Ontology ID _and_ the Label
    - click the 'highlighter' icon in the 'Actions' column to copy the highlighted text _and_ the Ontology ID _and_ the Label.
-   - click the 'disc' icon in the 'Actions' column to save the highlighted text, Ontology ID and Label to Termclick's history list. The number in the right upper corner of the Ontoclick window shows the number of items saved to the history list. Click the 'download' icon to download the history list as a .CSV file. 
+   - click the 'disc' icon in the 'Actions' column to save the highlighted text, Ontology ID and Label to Termclick's history list. The number in the right upper corner of the Termclick window shows the number of items saved to the history list. Click the 'download' icon to download the history list as a .CSV file. 
    Click the 'rubber' icon to erase the history list.
-7. Click on the Schema to list available schemas and click on a particular schema and see its respective classifications in the second dropdown list. Once you pick a particular classification, you will be able to perform a filtered search with respect to your choice. You can further narrow your search with respect to a particular ontology in the 3rd dropdown list.
+7. Click on the Schema to list available schemas and click on a particular schema and see its respective classifications in the second dropdown list. Once you pick a particular classification, you will be able to perform a filtered search with respect to your choice. You can further narrow your search with respect to a particular ontology in the 3rd dropdown list.q
 8. The Termclick Popup can also be launched without selecting any text:
    - right-click anywhere in the browser window and select Termclick from the context menu that appears
    - click the Termclick icon in the browser toolbar
@@ -70,7 +69,7 @@ Go to Chrome:
 1. Visit chrome://extensions
 2. Enable developer options
 3. Click 'Load unpacked extension...'
-4. Select the ontoclick/dist/ folder
+4. Select the termclick/dist/ folder
 ```
 
 
