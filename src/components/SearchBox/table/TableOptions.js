@@ -151,6 +151,7 @@ export default {
       process.env.EBI,
       {
         q: data.q,
+        fieldList: 'iri,label,synonym,short_form,obo_id,ontology_name,ontology_prefix,description,type',
         queryFields: queryFieldsValue,
         ontology: selections,
         groupField: 'iri',

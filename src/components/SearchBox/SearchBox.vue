@@ -2,15 +2,16 @@
 <div >
   <div class="row">
     <div class="col-sm-7 text-left">
-      <img class="logo" src="/static/img/tib.png">
       <h3 class="pull-left">TERMCLICK</h3>
       <i class="pull-right hover-action fas fa-eraser clear-icon hoverer" title="Clear All" id="clearButton"></i>
       <button class="pull-right hover-action export-button" title="Export" id="exportButton">
         <i class="pull-right fas fa-file-download export-icon hoverer"></i>
         <p class="pull-right" id="exportCounter"></p>
       </button>
+      
       <!-- <button class="pull-right spaced" @click='keyResetter()'>RESET KEY</button> -->
     </div>
+    <img class="logo" src="/static/img/tib-full-en.png">
   <div id="apkey" style="display:none"></div>
   </div>
   <v-server-table :url="url" :columns="columns" :options="options">
@@ -37,7 +38,7 @@
       </select>
     </div>
 
-    <div class="dropdown">
+    <div id="classificationdiv" class="dropdown" style="display: none;">
       <span>Classification:</span>
       <select id="classification" v-model="selectedClassification" @change="onChangeClassification" style="width: 300px; text-overflow: ellipsis;">
         <option value="">Select a Classification</option>
@@ -51,7 +52,7 @@
       </select>
     </div>
 
-    <div class="dropdown">
+    <div id="ontologydiv" class="dropdown" style="display: none;">
       <span>Ontology&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
       <select id="ontology" v-model="selectedOntology" style="width: 300px; text-overflow: ellipsis;">
         <option value="">Select an Ontology</option>
@@ -73,11 +74,15 @@
 
     <template slot="child_row" scope="props">
         <div class='text-wrap' v-if="props.row.definition"><b>Definition: </b>{{props.row.definition[0]}}</div>
-        <div class='text-wrap' v-if="props.row.type"><b>Type: </b>{{props.row.type}}</div>
         <div class='text-wrap' v-if="props.row.synonym"><b>Synonyms: </b>{{ typeof props.row.synonym === 'string' ? props.row.synonym : props.row.synonym.join(', ') }}</div>
+        <div class='text-wrap' v-if="props.row.short_form && props.row.short_form != props.row.prefLabel && !props.row.iri.includes(props.row.short_form)"><b>Short Form: </b>{{props.row.short_form}}</div>
+        <div class='text-wrap' v-if="props.row.type"><b>Type: </b>{{props.row.type}}</div>
+        <button v-bind:id="props.row.iri+'button'" @click="getTermAnnotations(props.row.ontology_name,props.row.type,props.row.iri)" style="background-color: #4682B4; color: white; border: none;">More Information ...</button>
+        <p v-bind:id="props.row.iri"></p>
       </template>
-    <template slot="notation" scope="props" v-if="props.row.notation">
+    <template slot="notation" scope="props">
         <span :id='"notation"+props.index' v-if="props.row.notation">{{props.row.notation}}</span>
+        <span :id='"notation"+props.index' v-else-if="props.row.short_form">{{props.row.ontology_name.toUpperCase()+':'+props.row.short_form}}</span>
         <a class="hover-action far fa-copy" @click='copyContent("notation"+props.index)'></a>
       </template>
     <template slot="prefLabel" scope="props" v-if="props.row.prefLabel">
@@ -95,7 +100,7 @@
         <a class="hover-action far fa-save save-button" title="Save to history" @click="storeData(props.row.notation, props.row.prefLabel)" v-if="props.row.notation && props.row.prefLabel && link"></a>
       </template>
   </v-server-table>
-<p style="padding: 30px 0px 0px 0px;"><center>This tool is forked from the original <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a> tool and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </center></p>
+<p style="padding: 30px 0px 0px 0px;"><center>This tool is forked from the original <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a> tool, funded by <a href="https://nfdi4ing.de" target="_blank">NFDI4ING</a> and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </center></p>
 </div>
 </template>
 
@@ -280,6 +285,7 @@ export default {
       link = false;
     }
     return {
+      commenttext: "Retry",
       listSchemas: [],
       listClassifications: [],
       listOntologies: [{ id: '*', label: '*' }],
@@ -336,6 +342,62 @@ export default {
     this.loadSchemas();
   },
   methods: {
+
+getTermAnnotations(ontology,type,iri){
+
+  if (document.getElementById(iri+'button').innerHTML == "Less Information | x"){
+    document.getElementById(iri+'button').innerHTML = "More Information ...";
+    document.getElementById(iri+'button').style.backgroundColor = "#4682B4";
+    document.getElementById(iri+'button').style.color = "white";
+    document.getElementById(iri).innerHTML = "";
+    return;
+  }
+  
+  let termTypeURLComponent = "/terms/";
+  if (type == "property")
+    termTypeURLComponent = "/properties/";
+  else if (type == "individual")
+    termTypeURLComponent = "/individuals/";  
+
+    axios
+      .get(
+        "https://service.tib.eu/ts4tib/api/ontologies/" +
+          ontology +
+          termTypeURLComponent +
+          encodeURIComponent(encodeURIComponent(iri))
+      )
+      .then((res) => {
+        let annotationText = "";
+        document.getElementById(iri).innerHTML = ""; 
+        try {
+          const annotations = Object.keys(res.data.annotation).map((comm) => {
+            return {
+              [comm]: res.data.annotation[comm]
+            };
+          });
+ 
+          for (let i = 0; i < annotations.length; i++) {
+            
+            annotationText +='<b>'
+            annotationText += Object.keys(annotations[i]).join("-");
+            annotationText+=': </b>'
+
+            annotationText += Object.values(annotations[i]).join("-");
+            annotationText +='<br>';
+            document.getElementById(iri).innerHTML = annotationText;   
+            document.getElementById(iri+'button').innerHTML = "Less Information | x"; 
+            document.getElementById(iri+'button').style.backgroundColor = "#E4F6F8";
+            document.getElementById(iri+'button').style.color = "#008CBA";
+           }
+
+        } catch (error) {
+          this.commenttext = error;
+        }
+      });
+
+this.commenttext = "Retry";
+
+},
        loadSchemas() {
       axios
         .get(
@@ -374,12 +436,17 @@ export default {
             this.listClassifications = classificationList;
             this.listOntologies = [];
             this.selectedClassification = "";
-            this.selectedOntology = "";
+            this.selectedOntology = "";           
+            document.getElementById("classificationdiv").style.display = "block";
+            document.getElementById("ontologydiv").style.display = "none";
+              
           } catch (error) {
             this.listClassifications = [];
             this.listOntologies = [];
             this.selectedClassification = "";
             this.selectedOntology = "";
+            document.getElementById("classificationdiv").style.display = "none";
+            document.getElementById("ontologydiv").style.display = "none";
           }
         });
     },
@@ -402,9 +469,11 @@ export default {
             });
             this.listOntologies = ontologyList;
             this.selectedOntology = "";
+            document.getElementById("ontologydiv").style.display = "block";
           } catch (error) {
             this.listOntologies = [];
             this.selectedOntology = "";
+            document.getElementById("ontologydiv").style.display = "none";
           }
         });
     },
@@ -608,7 +677,8 @@ ul.pagination>li>a,
 
 .logo {
   height: 30px;
-  width: 30px;
+  width: 184px;
+  float:right;
 }
 
 .clear-icon {
