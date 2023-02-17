@@ -2,7 +2,7 @@
 <div >
   <div class="row">
     <div class="col-sm-7 text-left">
-      <img class="logo" src="/static/img/tib.png">
+      <img class="logo" src="/static/img/tib-full-en.png">
       <h3 class="pull-left">TERMCLICK</h3>
       <i class="pull-right hover-action fas fa-eraser clear-icon hoverer" title="Clear All" id="clearButton"></i>
       <button class="pull-right hover-action export-button" title="Export" id="exportButton">
@@ -676,7 +676,7 @@ ul.pagination>li>a,
 
 .logo {
   height: 30px;
-  width: 30px;
+  width: 184px;
 }
 
 .clear-icon {
