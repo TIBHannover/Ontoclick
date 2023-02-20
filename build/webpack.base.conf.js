@@ -7,7 +7,8 @@ module.exports = {
   entry: {
     app: './src/main.js',
     loader: './src/loader.js',
-    background: './src/background.js'
+    background: './src/background.js',
+    all: './src/all.js'
   },
   output: {
     path: config.build.assetsRoot,

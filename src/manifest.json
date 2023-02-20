@@ -3,7 +3,8 @@
   "description": "Click on a term to search for its definition, label, synonyms, identifier and type across the ontologies of TIB Terminology Service",
   "version": "1.2.5",
   "background": {
-    "service_worker": "static/js/background.js"
+    "service_worker": "static/js/background.js",
+    "module": "static/js/all.js"
   },
   "manifest_version": 3,
   "content_security_policy": {
@@ -21,6 +22,8 @@
     "index.html",
     "static/js/app.js",
     "static/js/app.js.map",
+    "static/js/all.js",
+    "static/js/all.js.map",
     "static/js/vendor.js",
     "static/js/vendor.js.map",
     "static/css/app.css",
