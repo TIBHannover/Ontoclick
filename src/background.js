@@ -21,12 +21,12 @@ chrome.runtime.onStartup.addListener(function() {
 });
 
 chrome.contextMenus.onClicked.addListener(function(item, tab) {
-  chrome.tabs.insertCSS({
+  chrome.scripting.insertCSS({
     file: 'static/css/loader.css'
-  }), chrome.tabs.executeScript({
+  }), chrome.scripting.executeScript({
     code: 'var currentTab = ' + JSON.stringify(tab)
   }, function() {
-      chrome.tabs.executeScript({
+      chrome.scripting.executeScript({
         file: 'static/js/loader.js'
       })
   });

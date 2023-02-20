@@ -4,7 +4,7 @@
   "version": "1.2.5",
   "background": {
     "service_worker": "static/js/background.js",
-    "module": "static/js/all.js"
+    "type": "module"
   },
   "manifest_version": 3,
   "content_security_policy": {
