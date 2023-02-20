@@ -1,29 +1,32 @@
 {
   "name": "TermClick",
-  "description": "Click on a term to search for its definition, label and synonyms as well as its identifier and type across the approved ontologies of TIB Terminology Service at https://service.tib.eu/ts4tib/index .",
+  "description": "Click on a term to search for its definition, label, synonyms, identifier and type across the ontologies of TIB Terminology Service",
   "version": "1.2.5",
   "background": {
-    "scripts": ["static/js/background.js"]
+    "service_worker": "static/js/background.js"
   },
-  "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://use.fontawesome.com/releases/v5.14.0/js/all.js; object-src 'self'",
+  "manifest_version": 3,
+  "content_security_policy": {
+     "extension_pages": "script-src 'self'; object-src 'self'"
+  },
   "icons": {
     "16": "static/img/tib.png",
     "128": "static/img/tib.png"
   },
-  "browser_action": {
+  "action": {
     "default_title": "Termclick",
     "default_popup": "index.html"
   },
-  "web_accessible_resources": [
+  "web_accessible_resources": [{ "resources": [
     "index.html",
     "static/js/app.js",
     "static/js/app.js.map",
     "static/js/vendor.js",
     "static/js/vendor.js.map",
     "static/css/app.css",
-    "static/css/app.css.map"
-  ],
+    "static/css/app.css.map"],
+    "matches": ["<all_urls>"]
+}],
   "permissions": [
     "contextMenus",
     "clipboardWrite",
