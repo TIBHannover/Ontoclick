@@ -20,6 +20,10 @@ chrome.runtime.onStartup.addListener(function() {
   });
 });
 
+function getCurrentTab(tab){
+  var currentTab = JSON.stringify(tab);
+}
+
 chrome.contextMenus.onClicked.addListener(function(item, tab) {
   chrome.scripting.insertCSS({
     target: {
@@ -30,7 +34,8 @@ chrome.contextMenus.onClicked.addListener(function(item, tab) {
     target: {
       tabId: tab.id
     },
-    func: (tab) => {'var currentTab = ' + JSON.stringify(tab)}
+    func: getCurrentTab,
+    args: [tab]
   }, function() {
       chrome.scripting.executeScript({
         target: {
