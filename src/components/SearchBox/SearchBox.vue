@@ -11,7 +11,7 @@
       
       <!-- <button class="pull-right spaced" @click='keyResetter()'>RESET KEY</button> -->
     </div>
-    <img class="logo" src="/static/img/tib-full-en.png">
+    <a href="https://www.tib.eu/" target="_blank"><img class="logo" src="/static/img/tib-full-en.png"></a>
   <div id="apkey" style="display:none"></div>
   </div>
   <v-server-table :url="url" :columns="columns" :options="options">
@@ -100,7 +100,7 @@
         <a class="hover-action far fa-save save-button" title="Save to history" @click="storeData(props.row.notation, props.row.prefLabel)" v-if="props.row.notation && props.row.prefLabel && link"></a>
       </template>
   </v-server-table>
-<p style="padding: 30px 0px 0px 0px;"><center>This tool is forked from the original <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a> tool, funded by <a href="https://nfdi4ing.de" target="_blank">NFDI4ING</a> and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </center></p>
+<p style="padding: 30px 0px 0px 0px;"><center>This tool is forked from <a href="https://github.com/azankl/Ontoclick" target="_blank">OntoClick</a>, funded by <a href="https://www.dfg.de/" target="_blank">DFG</a> as <a href="https://nfdi4ing.de" target="_blank">NFDI4ING</a> with project no: 442146713 and maintained by <a href="https://www.tib.eu/" target="_blank">TIB</a>.  </center></p>
 </div>
 </template>
 
